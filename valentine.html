@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You ❤️</title>
+
+<style>
+body{
+margin:0;
+font-family:Georgia, serif;
+background:radial-gradient(circle,#fff0f5,#ffe6ec);
+height:100vh;
+overflow:hidden;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#4a1f2d;
+}
+
+/* Card */
+.card{
+background:white;
+padding:60px 80px;
+width:600px;
+text-align:center;
+border-radius:25px;
+box-shadow:0 25px 50px rgba(0,0,0,0.15);
+position:relative;
+z-index:2;
+animation:fadeIn 1.5s ease;
+}
+
+.hidden{
+display:none;
+}
+
+h1{
+font-size:34px;
+}
+
+p{
+font-size:18px;
+line-height:1.8;
+margin-bottom:30px;
+}
+
+button{
+padding:14px 36px;
+font-size:18px;
+border:none;
+border-radius:40px;
+cursor:pointer;
+background:#ff4f81;
+color:white;
+margin:10px;
+transition:0.3s;
+}
+
+button:hover{
+transform:translateY(-3px);
+box-shadow:0 10px 30px rgba(255,79,129,0.4);
+}
+
+/* Fade animation */
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(20px);}
+to{opacity:1; transform:translateY(0);}
+}
+
+/* Floating hearts */
+.heart{
+position:absolute;
+bottom:-40px;
+font-size:24px;
+opacity:0.7;
+animation:floatUp linear infinite;
+}
+
+@keyframes floatUp{
+0%{transform:translateY(0) scale(1);}
+100%{transform:translateY(-120vh) scale(1.5); opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- MUSIC -->
+<audio id="bgMusic" loop>
+<source src="just-the-two-of-us.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+window.addEventListener("click", () => {
+const music = document.getElementById("bgMusic");
+music.play();
+},{ once:true });
+</script>
+
+<!-- PAGE 1 -->
+<div class="card" id="page1">
+<h1>Mr. Alexander Jae Rothe ❤️</h1>
+<p>I made this little place on the internet just for you.</p>
+<button onclick="nextPage()">Continue</button>
+</div>
+
+<!-- PAGE 2 -->
+<div class="card hidden" id="page2">
+<p>
+With you, life feels softer.  
+Laughs feel warmer.  
+Love feels effortless.
+</p>
+<button onclick="nextPage()">Go on</button>
+</div>
+
+<!-- PAGE 3 -->
+<div class="card hidden" id="page3">
+<h1>Will you be my Valentine? 💘</h1>
+<button onclick="yesClicked()">Yes</button>
+<button onclick="yesClicked()">Yesssssssss</button>
+</div>
+
+<!-- PAGE 4 -->
+<div class="card hidden" id="page4">
+<h1>Happy Valentine’s Day 💞</h1>
+<p>Thank you for choosing me today and always.</p>
+<p>Forever yours ❤️</p>
+</div>
+
+<script>
+let currentPage = 1;
+
+/* Page switching */
+function nextPage(){
+document.getElementById("page"+currentPage).classList.add("hidden");
+currentPage++;
+document.getElementById("page"+currentPage).classList.remove("hidden");
+}
+
+function yesClicked(){
+document.getElementById("page3").classList.add("hidden");
+document.getElementById("page4").classList.remove("hidden");
+}
+
+/* Floating hearts */
+function createHeart(){
+const heart=document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML="💗";
+heart.style.left=Math.random()*100+"vw";
+heart.style.animationDuration=(5+Math.random()*5)+"s";
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),10000);
+}
+setInterval(createHeart,700);
+
+/* Autoplay music trick */
+window.addEventListener("load",()=>{
+const music=document.getElementById("bgMusic");
+
+music.play().then(()=>{
+setTimeout(()=>{
+music.muted=false;
+music.volume=0.7;
+},500);
+}).catch(()=>{
+console.log("Autoplay blocked by browser");
+});
+});
+</script>
+
+</body>
+</html>
